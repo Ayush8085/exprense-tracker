@@ -3,11 +3,13 @@ import { MONGO_URI, PORT } from './config';
 import authRoutes from './routes/auth.routes';
 import mongoose from 'mongoose';
 import errorMiddleware from './middlewares/error.middleware';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 // ------------- MIDDLEWARES -------------
 app.use(express.json());
+app.use(cookieParser());
 
 // ------------- ROUTES MIDDLEWARES -------------
 app.use('/api/v1/', authRoutes);

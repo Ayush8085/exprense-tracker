@@ -101,7 +101,15 @@ const loginUser: RequestHandler = asyncHandler(async (req, res) => {
         })
 })
 
+// ------------------ GET LOGGED IN USER ------------------ 
+const loggedInUser: RequestHandler = asyncHandler(async (req, res) => {
+    res.status(200).json({
+        user: req.user
+    })
+})
+
 export {
     registerUser,
     loginUser,
+    loggedInUser,
 }
