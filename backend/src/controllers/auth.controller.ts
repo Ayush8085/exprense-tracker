@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import z from 'zod';
 import User from "../models/user.model";
 import bcrypt from 'bcryptjs';
+import { accessToken } from "../utils/jwt.token";
 
 // ------------------ REGISTER USER ------------------ 
 const registerUser: RequestHandler = asyncHandler(async (req, res) => {
@@ -40,14 +41,20 @@ const registerUser: RequestHandler = asyncHandler(async (req, res) => {
         password: req.body.password,
     })
 
-    res.status(201).json({
-        message: "Signup successfull!!",
-        user: {
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-        },
-    })
+    // GENERATE ACCESS TOKEN
+    const token = await accessToken(user._id);
+
+    res.status(201)
+        .cookie('token', token)
+        .json({
+            message: "Signup successfull!!",
+            token,
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+            },
+        })
 })
 
 export {
