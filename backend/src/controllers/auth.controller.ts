@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
 import z from 'zod';
 import User from "../models/user.model";
+import bcrypt from 'bcryptjs';
 
 // ------------------ REGISTER USER ------------------ 
 const registerUser: RequestHandler = asyncHandler(async (req, res) => {
@@ -41,7 +42,11 @@ const registerUser: RequestHandler = asyncHandler(async (req, res) => {
 
     res.status(201).json({
         message: "Signup successfull!!",
-        user,
+        user: {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+        },
     })
 })
 
