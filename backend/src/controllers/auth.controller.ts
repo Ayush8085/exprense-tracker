@@ -15,27 +15,21 @@ const registerUser: RequestHandler = asyncHandler(async (req, res) => {
     // VALIDATE INPUTS
     const { success } = registerObject.safeParse(req.body);
     if (!success) {
-        res.status(404).json({
-            message: "Invalid inputs!!",
-        })
-        return
+        res.status(404);
+        throw new Error("Invalid Inputs");
     }
 
     // MATCH PASSWORDS
     if (req.body.password !== req.body.repassword) {
-        res.status(404).json({
-            message: "Passwords does not match!!",
-        })
-        return
+        res.status(404);
+        throw new Error("Passwords does not match!!");
     }
 
     // CHECK IF EMAIL TAKEN
     const existUser = await User.exists({ email: req.body.email });
     if (existUser) {
-        res.status(404).json({
-            message: "Email already registered!!",
-        })
-        return
+        res.status(404);
+        throw new Error("Email already registered!!");
     }
 
     // CREATE USER
