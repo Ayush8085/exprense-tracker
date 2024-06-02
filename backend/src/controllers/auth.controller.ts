@@ -57,6 +57,51 @@ const registerUser: RequestHandler = asyncHandler(async (req, res) => {
         })
 })
 
+// ------------------ REGISTER USER ------------------ 
+const loginUser: RequestHandler = asyncHandler(async (req, res) => {
+    const loginObject = z.object({
+        email: z.string().email(),
+        password: z.string().min(6),
+    });
+
+    // VALIDATE INPUTS
+    const { success } = loginObject.safeParse(req.body);
+    if (!success) {
+        res.status(404);
+        throw new Error("Invalid Inputs");
+    }
+
+    // GET USER
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        res.status(404);
+        throw new Error("User not found!!");
+    }
+
+    // COMPARE PASSWORD
+    const correctPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!correctPassword) {
+        res.status(404);
+        throw new Error("Incorrect password!!");
+    }
+
+    // GENERATE ACCESS TOKEN
+    const token = await accessToken(user._id);
+
+    res.status(200)
+        .cookie('token', token)
+        .json({
+            message: "Login successfull!!",
+            token,
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+            },
+        })
+})
+
 export {
     registerUser,
+    loginUser,
 }
