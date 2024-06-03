@@ -18,7 +18,7 @@ const registerUser: RequestHandler = asyncHandler(async (req, res) => {
     const { success } = registerObject.safeParse(req.body);
     if (!success) {
         res.status(404);
-        throw new Error("Invalid Inputs");
+        throw new Error("Missing/Invalid Inputs");
     }
 
     // MATCH PASSWORDS
