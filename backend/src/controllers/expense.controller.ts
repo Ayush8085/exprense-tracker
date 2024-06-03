@@ -68,9 +68,38 @@ const deleteExpense: RequestHandler = asyncHandler(async (req, res) => {
     })
 });
 
+// ------------------ UPDATE EXPENSE ------------------ 
+const updateExpense: RequestHandler = asyncHandler(async (req, res) => {
+    // GET EXPENSE
+    const expense = await Expense.findOneAndUpdate(
+        {
+            userId: req.user.id,
+            _id: req.params.expenseId
+        },
+        {
+            title: req.body.title,
+            price: req.body.price,
+            description: req.body.description,
+        },
+        { runValidators: true }
+    );
+    if (!expense) {
+        res.status(404);
+        throw new Error("Expense not found or You are not authorized for this expense!!")
+    }
+
+    const updatedExpense = await Expense.findById(expense._id);
+
+    res.status(200).json({
+        message: "Expense updated successfully!!",
+        expense: updatedExpense,
+    })
+});
+
 export {
     createExpense,
     getAllExpense,
     getExpense,
     deleteExpense,
+    updateExpense,
 }
