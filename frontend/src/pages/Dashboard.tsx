@@ -67,12 +67,12 @@ export const Dashboard = () => {
             </div>
             <div className="flex flex-col flex-wrap sm:flex-row p-4 gap-4">
                 <Table>
-                    <TableCaption>A list of your recent invoices.</TableCaption>
+                    <TableCaption>A list of your recent expenses.</TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Invoice</TableHead>
-                            <TableHead>Status</TableHead>
+                            <TableHead>Title</TableHead>
                             <TableHead>Method</TableHead>
+                            <TableHead>Type</TableHead>
                             <TableHead className="text-right">Amount</TableHead>
                         </TableRow>
                     </TableHeader>
