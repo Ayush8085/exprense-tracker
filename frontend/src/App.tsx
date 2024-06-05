@@ -5,6 +5,7 @@ import PrivateRoutes from './utils/PrivateRoutes'
 import Home from './pages/Home'
 import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
+import { Dashboard } from './pages/Dashboard'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         {/* PRIVATE ROUTES */}
         <Route element={<PrivateRoutes />} >
           <Route path='/' element={<Home />} />
+          <Route path='/dashboard' element={<Dashboard />} />
         </Route>
 
       </Routes>
