@@ -12,7 +12,13 @@ import { Input } from "@/components/ui/input"
 import { ReactNode } from "react"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 
-export function AddExpenseCard({ children }: { children: ReactNode }) {
+export function AddExpenseCard({
+  children,
+  title
+}: {
+  children: ReactNode,
+  title: string,
+}) {
 
   return (
     <Dialog>
@@ -21,7 +27,7 @@ export function AddExpenseCard({ children }: { children: ReactNode }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Expense</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
             Add the expense here.
           </DialogDescription>
